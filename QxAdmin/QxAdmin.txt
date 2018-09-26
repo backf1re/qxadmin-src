@@ -1,0 +1,226 @@
+
+
+QxAdmin v1.12a
+
+
+------------------------------
+Description
+------------------------------
+
+Using QxAdmin you can remotely controls QuakeWorld, Quake 2,
+Quake 3: Arena servers from a Win32 machine. It can be used, also,
+as a simple server public status program.
+
+The server can be on any kind of machine. At the time of this writing,
+servers exist for these platforms: Linux, Win32, MacOS, OS X.
+
+This program includes all the functions of qwadmin(the original, 
+not DrDrain's one) and q2admin, I also wrote those.
+
+Source code is included, see the "Source code" section below.
+
+*** New this version: see bottom of "Usage" section.
+
+Please submit bugs reports, suggestions, flames(not too much) to:
+pierreandre_cote@yahoo.com
+
+Homepage: http://www.planetquake.com/qxadmin/
+
+Thanks to Barbat for his suggestions and web site design.
+Thanks to Gag for his suggestions and for the strange bugs reports.
+
+Pierre-André Côté
+
+
+------------------------------
+Installation
+------------------------------
+
+Just Unzip the files in a directory of your choice.
+You better know how to do that.
+
+If QxAdmin failed to start and a message box saying something like
+"The QXADMIN.EXE file is linked to missing export MFC42.DLL:6778", 
+go to the link below and download the appropriate update:
+http://www.microsoft.com/windows/downloads/contents/common/mfc.htm
+
+You can also download only MFC42.dll here: "http://www.planetquake.com/qxadmin/MFC42.zip"
+and extract it in your QxAdmin directory, but do this at your own risk.
+
+------------------------------
+Usage
+------------------------------
+
+1- set the server address in the "Server address" box
+
+2- set the server port in the "Port" box. If you didn't change it
+   on your server you can leave this box empty: choosing the type
+   (see below) will set the default port. Default port for
+   QuakeWorld: 27500, Quake 2: 27910, Quake 3:Arena: 27960.
+
+3- set the server type with radio buttons beside "Server type"
+   If you don't know what kind of server it is you can check
+   "Auto-detect" but that's very unlikely :)
+
+4- Test if you can ping the server with the "Get public status"
+   button. If the server does not respond check the previous
+   three settings.
+   
+5- set the rcon password in the "rcon password" box. You should
+   have set it in the server beforehand. In Quakeworld do something
+   like this(in the server console): rcon_password "qxadminrules!".
+   In Quake 2: set rcon_password "qxadminrules!"
+   In Q3:Arena: set rconpassword "qxadminrules!"
+
+6- Test if you have entered the right rcon password by using the
+   "rcon status" button. If that worked(there's a normal "status"
+   output in the remote console box), you are all set. If not, verify
+   both rcon passwords on the server and in QxAdmin.
+
++ If the server port box is empty and you click one of the QuakeWorld,
+  Quake 2, Quake 3 type buttons the default port is put in the port box.
+
++ You can edit console variables by double-clicking or right-clicking
+  on their names.
+
++ You can send any normal commands, set variables, etc., in the
+  bottom remote console entry box as you would do in a normal
+  server console. You can press ENTER after you have entered the
+  command to send it.
+  
++ There's a 10 servers history and a 20 commands history. This
+  history is saved in the "qxadmin.ini" file. No registry crap!
+
+- New in version 1.0:
+---------------------
+
++ You can kick players by right clicking on one then selecting "Kick!"
+  Is this is easy or what?
+
++ If "Always console vars" is selected the server infos box always displays
+  console variables in place of the public server infos. You need to set the
+  rcon password first to use that. [Someone suggested this feature but I can't
+  remember his name. E-mail me back!]
+
++ If "Always default port on type select" is selected, the default port
+  for is set in the port box when selecting the server type.
+
++ The Quake 3:Arena colored names are displayed as regular characters.
+
++ Server port spin control(up-down arrows)
+
++ Server infos scrollbar memory
+
+- New in version 1.01:
+---------------------
+
++ Auto update: At specified interval QxAdmin do a "Get Public Stats"
+
++ Fixed a little bug in libqxadm.dll (timeout set too long)
+
+- New in version 1.02:
+---------------------
++ Disabled some buttons in QW mode and squased a bug with the auto-update spin
+  control(thanks to Barbat for pointing this out.)
+
+- New in version 1.03:
+---------------------
++ Fixed bug with the right-click menu kick command
+
+- New in version 1.1:
+---------------------
+
++ console variables refresh should be faster
+
++ 'rlogview': allow the viewing of console logs in real time, requires 'rlogviewd'
+  (included in this archive) to run on the server computer.
+  
++ 'rlogviewd': must run on the server to use rlogview. If your server run on win32
+  uses the included .exe(and download cygwin1.zip from the website and unzip it in
+  the same directory as rlogviewd.exe).
+  If not, you will have to compile 'rlogviewd.c' on it.
+  A simple 'gcc -O2 rlogviewd.c -o rlogview' should do.
+
+- New in version 1.12:
+---------------------
++ A couple of things and some others(I lost the changes in a HD 'crash')
+
+- New in version 1.12a:
+----------------------
++ Enlarged the port edit box to display correctly 5 digits
+
+
+=== Using rlogview/rlogviewd ===
+
+o Setting-up the server(rlogviewd):
+  
+  I assume you have the rlogviewd executable (see above).
+
+  Open 'rlogviewd.cfg'(included in this archive). There's 5 options:
+  'password': password required to log in rlogviewd
+  'port': TCP/IP port that rlogviewd listen to
+  'quiet': if "1": reduced somewhat screen output
+  'logfile': the actual file that rlogviewd will monitor for update
+  'key': encoding key used to 'encrypt' data sent to clients (and to decode data
+         coming from clients). See setting-up the client below.
+
+o Setting-up the client(QxAdmin/rlogview)
+  
+  Start QxAdmin.exe. Click on the 'Show rlogview' button.
+  Then click the 'Generate' button. Select the hash key and copy it to the clipboard.
+  Paste it(or type it) in the rlogviewd.cfg on the server side.
+  For example: If in the hash key edit box there is: "3F87A6B9", you must have a line
+  in rlogviewd.cfg like this: key = "3F87A6B9"
+
+  Setup the port, password edit-boxes with the same values as the ones in the
+  rlogviewd.cfg file.
+
+* After setting-up both the client and the server, start the server and if
+  there's no error you can click the 'Connect' button on the client. You should
+  see a message box saying that everything is allright.
+
+
+* NOTES REGARDING LOG FILES *
+
+You can use the rcon command 'logfile' to generate logfiles.
+In Q2 I recommend using 'logfile 3', in Q3: 'logfile 2'(3 doesn't work).
+In Quakeworld: the logfile seems to be written only when the server quits(or every
+many minutes), so that render rlogview pretty useless... But:
+You can also redirect the output like this: "quake2.exe > baseq2\qconsole.log"
+
+------------------------------
+Source code
+------------------------------
+
+Included in this archive is the source code used to build QxAdmin,
+both for the main .exe(QxAdmin) and the server querying .dll(libqxadm).
+
+You can easily write a program using only the .dll and do whatever you
+want with the server reply. For example, it could be used to create
+a server pinger tool. Use your imagination!
+
+The source is in C++. The .dll is plain C++. The main .exe uses MFC.
+The projects files for Microsoft Visual C++ 6.0 are also included.
+
+You can look at "test.cpp" in the libqxadm directory for a mini example
+of what libqxadm can do.
+
+libqxadm can be compiled on unix systems(tested in Linux).
+
+------------------------------
+Copying
+------------------------------
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
